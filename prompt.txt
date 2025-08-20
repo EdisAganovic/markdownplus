@@ -1,0 +1,70 @@
+Agent Task: Build a Local RAG Chatbot Application
+
+Persona: You are an expert Python developer specializing in building AI-powered web applications. Your code should be clean, efficient, and well-documented.
+
+High-Level Objective:
+Create a fully functional web application that allows a user to upload a PDF document and ask questions about its content. The application will use a local RAG (Retrieval-Augmented Generation) pipeline with ChromaDB as the vector store and Google's Gemini API as the language model.
+
+Detailed Instructions & Requirements:
+
+1. Project Structure:
+Create the following file and directory structure:
+
+/gemini_rag_app
+|-- venv/
+|-- app.py
+|-- pdf_processor.py
+|-- .env
+|-- templates/
+|   |-- index.html
+
+2. Environment & Dependencies:
+The application will use Python. The required libraries are:
+google-generativeai, langchain, chromadb, pypdf, sentence-transformers, flask, python-dotenv.
+Generate a requirements.txt file or provide the pip install command.
+
+3. Configuration (.env file):
+The application must load the Gemini API key from a .env file. The file should contain one variable: GEMINI_API_KEY="YOUR_API_KEY_HERE".
+
+4. PDF Processing Logic (pdf_processor.py):
+Create a module responsible for handling the PDF. It must contain a primary function process_pdf(file_path) that performs the following steps:
+a. Load Document: Use PyPDFLoader from LangChain to load the text content from the file_path.
+b. Split Text: Use RecursiveCharacterTextSplitter to break the loaded text into smaller, manageable chunks (e.g., chunk size of 1000, overlap of 200).
+c. Generate Embeddings: Use SentenceTransformerEmbeddings with the pre-trained model 'all-MiniLM-L6-v2'.
+d. Store in Vector DB: Initialize a Chroma vector store and ingest the text chunks and their embeddings.
+e. Return Retriever: The function should return a retriever object created from the Chroma vector store (as_retriever()).
+
+5. Backend Web Server (app.py):
+Implement a Flask web server with the following characteristics:
+a. Global Variable: Use a global variable (e.g., DOCUMENT_RETRIEVER = None) to hold the retriever object in memory after a PDF is processed.
+b. Root Endpoint (/): A GET route that renders the templates/index.html file.
+c. Upload Endpoint (/upload):
+- A POST route that accepts a file upload.
+- Save the uploaded PDF to a temporary location.
+- Call the process_pdf() function from pdf_processor.py with the path to the saved file.
+- Store the returned retriever object in the global DOCUMENT_RETRIEVER variable.
+- Return a JSON response indicating success (e.g., {"status": "success", "message": "File processed."}).
+d. Query Endpoint (/query):
+- A POST route that accepts a JSON payload with a user's question (e.g., {"question": "What is the main topic?"}).
+- Check if the DOCUMENT_RETRIEVER is available. If not, return an error.
+- Use the retriever to find relevant document chunks based on the user's question.
+- Configure the Google Gemini Pro model using the API key from the environment variables.
+- Construct a detailed prompt that includes the retrieved context and the user's original question. The prompt should instruct the model to answer based only on the provided context.
+- Send the prompt to the Gemini model and get the generated response.
+- Return the model's response as a JSON object (e.g., {"answer": "The main topic is..."}).
+
+6. Frontend Interface (templates/index.html):
+Create a simple, single-page HTML interface with the following elements:
+a. Title: "Chat with your PDF".
+b. File Upload Form: A form with an <input type="file"> and a submit button that sends the PDF to the /upload endpoint. Display a status message to the user upon success or failure.
+c. Chat Interface:
+- A chat history div to display the conversation.
+- A text input field for the user's question.
+- A "Send" button.
+d. JavaScript Logic:
+- Use fetch API for all communication with the backend.
+- Implement an async function to handle the form submission for the /query endpoint.
+- When a question is submitted, display the user's message in the chat history, send it to the backend, and then display the bot's response once it's received.
+- Ensure the UI indicates a "thinking..." or loading state while waiting for the backend response.
+
+Final Deliverable: A set of code files that, when run with flask run after installing dependencies, launches a functional web application meeting all the above requirements.
