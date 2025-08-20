@@ -190,6 +190,9 @@ config/secrets/
 logs/
 *.log
 
+# Executable files
+*.exe
+
 # Project specific (you can customize these)
 files/
 output/
