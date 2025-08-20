@@ -1,4 +1,4 @@
-# MD Profi
+# MD+
 
 A simple utility for processing markdown files with advanced features.
 
