@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="sidebar">
+        <h2>Markdown+</h2>
+        <div class="theme-selector">
+            <h3>Themes</h3>
+            <div class="theme-numbers">
+                <span class="theme-number" data-theme="theme-default" onclick="setTheme('theme-default')" title="Default Dark">1</span>
+                <span class="theme-number" data-theme="theme-abyss" onclick="setTheme('theme-abyss')" title="Abyss">2</span>
+                <span class="theme-number" data-theme="theme-midnight" onclick="setTheme('theme-midnight')" title="Midnight">3</span>
+                <span class="theme-number" data-theme="theme-obsidian" onclick="setTheme('theme-obsidian')" title="Obsidian">4</span>
+                <span class="theme-number" data-theme="theme-graphite" onclick="setTheme('theme-graphite')" title="Graphite">5</span>
+                <span class="theme-number" data-theme="theme-void" onclick="setTheme('theme-void')" title="Void">6</span>
+            </div>
+        </div>
+        <ul>
+            {% for file in files %}
+            <li><a href="/preview/{{ file }}">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="main-content">
+        <h1>Markdown Previewer</h1>
+        <p>Select a file from the sidebar to preview</p>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</div>
+<script>
+    // Set default theme from config
+    document.body.setAttribute('data-default-theme', '{{ default_theme }}');
+    document.body.setAttribute('data-toc-visible', '{{ toc_visible }}');
+</script>
+{% endblock %}

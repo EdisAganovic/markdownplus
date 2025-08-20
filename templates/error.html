@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="sidebar">
+        <h2>Markdown+</h2>
+        <ul>
+            {% for file in files %}
+            <li><a href="/preview/{{ file }}">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="main-content">
+        <h1>Error</h1>
+        <p>{{ error }}</p>
+        <a href="/">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

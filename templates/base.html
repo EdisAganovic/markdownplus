@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Previewer</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
+</head>
+<body>
+    {% block content %}{% endblock %}
+    <script>
+        // Set theme from config or saved preference
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const defaultTheme = document.body.getAttribute('data-default-theme') || 'theme-default';
+            const themeToApply = savedTheme || defaultTheme;
+            document.body.className = themeToApply;
+            
+            // Update active theme number
+            updateActiveTheme(themeToApply);
+        }
+        
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.body.className = themeName;
+            
+            // Update active theme number
+            updateActiveTheme(themeName);
+        }
+        
+        function updateActiveTheme(themeName) {
+            // Remove active class from all theme numbers
+            document.querySelectorAll('.theme-number').forEach(number => {
+                number.classList.remove('active');
+            });
+            
+            // Add active class to selected theme number
+            const activeNumber = document.querySelector(`[data-theme="${themeName}"]`);
+            if (activeNumber) {
+                activeNumber.classList.add('active');
+            }
+        }
+        
+        // Toggle Table of Contents visibility
+        function toggleToc() {
+            const toc = document.querySelector('.fixed-toc');
+            if (toc) {
+                const isVisible = toc.style.display !== 'none';
+                toc.style.display = isVisible ? 'none' : 'block';
+                
+                // Save preference to localStorage
+                localStorage.setItem('tocVisible', !isVisible);
+            }
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            
+            // Set TOC visibility based on config or saved preference
+            const toc = document.querySelector('.fixed-toc');
+            if (toc) {
+                const tocVisibleConfig = document.body.getAttribute('data-toc-visible') === 'true';
+                const tocVisibleSaved = localStorage.getItem('tocVisible');
+                
+                // If there's a saved preference, use it; otherwise use config
+                const tocVisible = tocVisibleSaved !== null ? 
+                    tocVisibleSaved === 'true' : 
+                    tocVisibleConfig;
+                
+                toc.style.display = tocVisible ? 'block' : 'none';
+            }
+        });
+    </script>
+</body>
+</html>
