@@ -8,6 +8,10 @@ A simple utility for processing markdown files with advanced features.
 - **YouTube Player Integration**: Automatically embeds YouTube videos from links in your markdown files (supports both youtube.com and youtu.be).
 - **Table of Contents**: Generates a clickable table of contents from your markdown headers (H1-H3) for easy navigation.
 
+## Screenshot
+
+![Application Screenshot](Screenshot.png)
+
 ## Getting Started
 
 1.  Download the latest release (md-profi-final.exe).
