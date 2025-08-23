@@ -194,7 +194,6 @@ logs/
 *.exe
 
 # Project specific (you can customize these)
-files/
 output/
 temp/
 cache/
