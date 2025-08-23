@@ -1,5 +1,10 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/static/font.ttf') format('truetype');
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'CustomFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #1e1e1e;
@@ -55,6 +60,7 @@ body {
     flex: 1;
     padding: 20px;
     margin-left: 290px; /* 250px for sidebar + 40px extra */
+    overflow-x: hidden;
 }
 
 .main-content h1 {
@@ -65,6 +71,7 @@ body {
 
 .markdown-content {
     max-width: 800px;
+    overflow-x: hidden;
 }
 
 .markdown-content h1,
@@ -85,10 +92,63 @@ body {
 }
 
 .markdown-content pre {
-    background-color: #333;
+    background-color: #2d2d2d;
     padding: 10px;
     border-radius: 5px;
     overflow-x: auto;
+    margin: 15px 0;
+    border: 1px solid #444;
+    max-width: 100%;
+    position: relative;
+}
+
+.markdown-content pre code {
+    background: none;
+    padding: 0;
+}
+
+/* Override highlight.js background to match our theme */
+.hljs {
+    background: #2d2d2d !important;
+    color: #e0e0e0 !important;
+}
+
+/* Copy button styles */
+.code-block-wrapper {
+    position: relative;
+    margin: 15px 0;
+}
+
+.copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #444;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    z-index: 10;
+    opacity: 0.8;
+    transition: all 0.2s;
+}
+
+.copy-button:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+.copy-button.copied {
+    background-color: #4CAF50;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
 }
 
 .markdown-content blockquote {

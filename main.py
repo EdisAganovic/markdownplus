@@ -16,8 +16,9 @@ import sys
 
 app = FastAPI()
 
-# Mount static files directory
+# Mount static files directories
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/files", StaticFiles(directory="files"), name="files")
 
 # Set up Jinja2 templates
 templates = Jinja2Templates(directory="templates")

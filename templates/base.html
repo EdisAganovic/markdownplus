@@ -6,6 +6,9 @@
     <title>Markdown Previewer</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/themes.css">
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 </head>
 <body>
     {% block content %}{% endblock %}
@@ -19,6 +22,13 @@
             
             // Update active theme number
             updateActiveTheme(themeToApply);
+        }
+        
+        // Initialize syntax highlighting
+        function initializeSyntaxHighlighting() {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
         }
         
         function setTheme(themeName) {
@@ -54,9 +64,48 @@
             }
         }
         
+        // Add copy buttons to code blocks
+        function addCopyButtons() {
+            document.querySelectorAll('pre').forEach((pre) => {
+                // Skip if already has a copy button
+                if (pre.querySelector('.copy-button')) return;
+                
+                // Create wrapper if it doesn't exist
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                
+                // Insert wrapper before pre, then move pre into wrapper
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
+                
+                // Create copy button
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.textContent = 'Copy';
+                button.addEventListener('click', () => {
+                    const code = pre.querySelector('code');
+                    const text = code ? code.innerText : pre.innerText;
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        button.textContent = 'Copied!';
+                        button.classList.add('copied');
+                        
+                        setTimeout(() => {
+                            button.textContent = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    });
+                });
+                
+                wrapper.appendChild(button);
+            });
+        }
+        
         // Initialize on page load
         window.addEventListener('DOMContentLoaded', function() {
             initializeTheme();
+            initializeSyntaxHighlighting();
+            addCopyButtons();
             
             // Set TOC visibility based on config or saved preference
             const toc = document.querySelector('.fixed-toc');
