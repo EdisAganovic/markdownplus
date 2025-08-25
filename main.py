@@ -68,10 +68,10 @@ def extract_headers(markdown_content):
 
 def extract_youtube_id(url):
     """Extract YouTube video ID from various YouTube URL formats"""
-    # Regular expressions for different YouTube URL formats
+    # Regularni izrazi za različite formate YouTube URL-ova
     patterns = [
-        r'(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&\n\r\s]+)',
-        r'(?:https?:\/\/)?(?:www\.)?youtu\.be\/([^\n\r\s?&]+)',
+        r'(?:https?://)?(?:www.)?youtube.com/watch?v=([^&\n\r\s]+)',
+        r'(?:https?://)?(?:www.)?youtu.be/([^\n\r\s?&]+)',
     ]
     
     for pattern in patterns:
