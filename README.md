@@ -37,9 +37,10 @@ A simple utility for processing markdown files with advanced features.
 ### Installation
 
 1. Clone or download this repository
-2. Install the required dependencies:
+2. Create virtual enviroment with "uv venv" and activate it.
+3. Install the required dependencies:
    ```
-   pip install -r requirements.txt
+   uv pip install -r requirements.txt
    ```
 
 ### Running the Application
