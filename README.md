@@ -1,6 +1,6 @@
-# MD+
+# MD+ (Markdown Plus)
 
-A simple utility for processing markdown files with advanced features.
+A powerful utility for processing and previewing markdown files with advanced features.
 
 ## Core Functionality
 - Markdown file previewer using FastAPI
@@ -22,6 +22,8 @@ A simple utility for processing markdown files with advanced features.
 - **Copy Buttons**: Each code block has a convenient copy button in the top-right corner.
 - **Responsive Design**: Images and code blocks automatically adjust to fit the content area.
 - **Error Handling**: Graceful error handling for missing files
+- **System Tray Integration**: Application runs in system tray with quick access options
+- **Configuration File**: Customize default settings with `config.json`
 
 ## Screenshot
 
@@ -32,15 +34,34 @@ A simple utility for processing markdown files with advanced features.
 ### Prerequisites
 
 - Python 3.7 or higher
+- `uv` package manager (recommended) or pip
 - Required Python packages (see `requirements.txt`)
 
 ### Installation
 
 1. Clone or download this repository
-2. Create virtual enviroment with "uv venv" and activate it.
-3. Install the required dependencies:
+2. Create virtual environment:
+   ```bash
+   uv venv
    ```
+   or if using standard Python:
+   ```bash
+   python -m venv .venv
+   ```
+3. Activate the virtual environment:
+   ```bash
+   # On Windows
+   .venv\Scripts\activate
+   # On macOS/Linux
+   source .venv/bin/activate
+   ```
+4. Install the required dependencies:
+   ```bash
    uv pip install -r requirements.txt
+   ```
+   or with standard pip:
+   ```bash
+   pip install -r requirements.txt
    ```
 
 ### Running the Application
@@ -48,10 +69,25 @@ A simple utility for processing markdown files with advanced features.
 1. Place your markdown files in the `files` folder
 2. (Optional) Place images in the `files/images` folder
 3. Run the application:
-   ```
+   ```bash
    python main.py
    ```
 4. The application will automatically open in your default web browser at `http://127.0.0.1:8000`
+5. Access the application anytime through the system tray icon
+
+### Building Executable (Windows)
+
+To build a standalone executable for Windows:
+
+1. Install cx_Freeze:
+   ```bash
+   uv pip install cx_Freeze
+   ```
+2. Run the build script:
+   ```bash
+   python build.py build
+   ```
+3. The executable will be created in the `build` directory
 
 ## Usage
 
@@ -60,12 +96,15 @@ A simple utility for processing markdown files with advanced features.
 3. Toggle the table of contents visibility with the "Prikaži sadržaj" button
 4. Click on any item in the table of contents to jump to that section
 5. Click the "Copy" button on any code block to copy its content to the clipboard
+6. Access the application anytime through the system tray icon
 
 ## File Structure
 - `main.py` - Main application logic
-- `templates/` - HTML templates (index.html, preview.html, error.html)
+- `build.py` - Build script for creating executable
+- `templates/` - HTML templates (index.html, preview.html)
 - `static/` - CSS, fonts, and other static assets
 - `files/` - Directory for markdown files and images
+- `config.json` - Application configuration settings
 
 ## Routes
 - `/` - Homepage with list of all .md files
@@ -78,6 +117,21 @@ A simple utility for processing markdown files with advanced features.
 - python-multipart - File upload handling
 - Jinja2 - Templating engine
 - pystray - System tray integration
+- Pillow - Image processing for system tray icon
+
+## Configuration
+
+The `config.json` file allows you to customize default settings:
+
+```json
+{
+    "default_theme": "theme-default",
+    "toc_visible": true
+}
+```
+
+- `default_theme`: Sets the default theme (options: theme-default, theme-dark, theme-blue, theme-green, theme-red, theme-purple)
+- `toc_visible`: Sets whether the table of contents is visible by default
 
 ## Development
 
@@ -95,3 +149,4 @@ To modify or extend the application:
 - The application runs locally and does not require an internet connection for basic functionality
 - Custom themes can be added by modifying `static/themes.css`
 - Theme preferences are saved in localStorage
+- YouTube thumbnails require an internet connection to display
